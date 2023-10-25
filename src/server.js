@@ -232,6 +232,6 @@ app.get("/ping", (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000
-app.listen(port, () => {
-  console.log(`Server is running on https://othermyndnode.herokuapp.com:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on https://othermyndnode.herokuapp.com:${PORT}`);
 });
