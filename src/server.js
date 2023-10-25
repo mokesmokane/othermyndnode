@@ -13,7 +13,7 @@ import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 const openaiApiKey = process.env.OPENAI_API_KEY;
 const pineconeApiKey = process.env.PINECONE_API_KEY;
 const pineconeEnvironment = process.env.PINECONE_ENVIRONMENT;
-const openaiOrg = process.env.OPENAI_API_KEY;
+const openaiOrg = process.env.OPENAI_API_ORG;
 
 const openai = new OpenAI({
   organization: openaiOrg,
