@@ -43,8 +43,10 @@ const firebaseConfig = {
 };
 
 admin.initializeApp({
-  credential: firebaseConfig
+  credential: admin.credential.cert(firebaseConfig)
 });
+
+
 const db = admin.firestore();
 const pinecone = new Pinecone({
   apiKey: pineconeApiKey,
