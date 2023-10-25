@@ -1,0 +1,38 @@
+# Dependency directories
+node_modules/
+
+# Debug log from npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables file
+.env
+.env.local
+
+# Production build folder
+/dist
+
+# Optional npm cache & logs
+.npm
+*.log
+
+# Optional eslint cache
+.eslintcache
+
+# Optional: Mac OS files
+.DS_Store
+
+# Optional: Windows files
+Thumbs.db
+ehthumbs.db
+
+# Optional: VSCode project settings
+.vscode/
+
+# Optional: IDEs and editors
+.idea/
+*.swp
+*.swo
+*.sublime*
+/othermynd-firebase-adminsdk-wubqu-ddbe43883d.json
