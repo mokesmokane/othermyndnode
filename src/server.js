@@ -10,7 +10,6 @@ import { Pinecone } from '@pinecone-database/pinecone';
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { EPubLoader } from "langchain/document_loaders/fs/epub";
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import serviceAccount from '../othermynd-firebase-adminsdk-wubqu-ddbe43883d.json' assert { type: 'json' };
 const openaiApiKey = process.env.OPENAI_API_KEY;
 const pineconeApiKey = process.env.PINECONE_API_KEY;
 const pineconeEnvironment = process.env.PINECONE_ENVIRONMENT;
@@ -44,7 +43,7 @@ const firebaseConfig = {
 };
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: firebaseConfig
 });
 const db = admin.firestore();
 const pinecone = new Pinecone({
