@@ -179,30 +179,35 @@ async function uploadKnowledge(req, res) {
 
   async function processEmbeddings() {
     const chunkSize = 50;
-    for (let i = 0; i < updated.length; i += chunkSize) {
-      const chunk = updated.slice(i, i + chunkSize);
-      const metas = chunk.map((segment, index) => ({
-        page: segment.metadata["page"],
-        filename: fileName,
-        chunk: index
-      }));
-  
-      const texts = chunk.map(segment => segment.text);
-      const ids = texts.map((_, index) => `${guid}_chunk_${i / chunkSize}_${index}`);
+    //loop through firesorePages and create embeddings
+    for(let i = 0; i < firestorePages.length; i++){
+      const page = firestorePages[i];
+      const segments = page.segments;
+      for (let i = 0; i < segments.length; i += chunkSize) {
+        const chunk = segments.slice(i, i + chunkSize);
+        const metas = chunk.map((segment, index) => ({
+          page: page.page,
+          filename: fileName,
+          chunk: segment.metadata.index
+        }));
     
-      const embeddingResponse = await openai.embeddings.create({
-        input: texts,
-        model: "text-embedding-ada-002"
-      });
+        const texts = chunk.map(segment => segment.text);
+        const ids = texts.map((_, index) => `${guid}_chunk_${i / chunkSize}_${index}`);
+      
+        const embeddingResponse = await openai.embeddings.create({
+          input: texts,
+          model: "text-embedding-ada-002"
+        });
 
-      let embeds = embeddingResponse.data.map(record => record.embedding);
-      const toUpsert = ids.map((id, index) => ({ id:id, values: embeds[index], metadata: metas[index] }));
-      let pindex = pinecone.index('external-index').namespace(guid);
-      pindex.upsert(toUpsert); 
-    
+        let embeds = embeddingResponse.data.map(record => record.embedding);
+        const toUpsert = ids.map((id, index) => ({ id:id, values: embeds[index], metadata: metas[index] }));
+        let pindex = pinecone.index('external-index').namespace(guid);
+        pindex.upsert(toUpsert); 
+      
+      }
     }
   }
-  
+    
   await processEmbeddings();
   if (idmap.exists) {
     let mymap = idmap.data().map
